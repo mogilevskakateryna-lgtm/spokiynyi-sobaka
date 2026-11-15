@@ -213,6 +213,33 @@ footer{padding-block:24px 40px;font-size:12px;color:var(--muted);text-align:cent
 .cover .c-play{flex:0 0 auto;width:clamp(48px,12vw,64px);height:clamp(48px,12vw,64px);border-radius:50%;background:#fff;color:var(--cbg,var(--brown));display:grid;place-items:center;box-shadow:0 8px 24px rgba(0,0,0,.25);transition:transform .15s}
 .cover:hover .c-play{transform:scale(1.07)}
 .cover .c-play svg{width:42%;height:42%;margin-left:6%}
+.sched2{padding-block:20px 8px}
+.sched{background:#fff;border:1px solid var(--line);border-radius:20px;overflow:hidden}
+.sched summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;padding:14px 16px}
+.sched summary::-webkit-details-marker{display:none}
+.sched summary:focus-visible{outline:3px solid var(--olive);outline-offset:-3px;border-radius:20px}
+.s-ic{flex:0 0 auto;width:40px;height:40px;border-radius:12px;background:var(--rose-soft);display:grid;place-items:center;font-size:18px}
+.s-t{flex:1;min-width:0;display:flex;flex-direction:column;line-height:1.3}
+.s-t b{font-size:16px}
+.s-t span{font-size:13px;color:var(--muted)}
+.s-chev{flex:0 0 auto;width:10px;height:10px;border-right:2.5px solid var(--muted);border-bottom:2.5px solid var(--muted);transform:rotate(45deg);margin:0 6px 4px 0;transition:transform .2s}
+.sched[open] .s-chev{transform:rotate(-135deg);margin-bottom:-4px}
+.s-body{padding:0 16px 16px;display:flex;flex-direction:column;gap:12px}
+.s-actions{display:flex;flex-wrap:wrap;gap:8px}
+.rows{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.row{display:grid;grid-template-columns:92px 1fr auto;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+.row.is-past{opacity:.55}
+.row.is-next .r-date{color:var(--rose)}
+.r-date{font-weight:800;font-size:14px;line-height:1.2;font-variant-numeric:tabular-nums}
+.r-date small{display:block;font-weight:600;font-size:12px;color:var(--muted)}
+.r-t{font-size:14px;line-height:1.3;min-width:0}
+.r-t i{font-style:normal;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--rose);display:block}
+.r-a{display:flex;gap:6px}
+.mini{display:inline-flex;align-items:center;gap:4px;font-size:13px;font-weight:800;border-radius:10px;padding:7px 10px;min-height:36px;text-decoration:none;border:0;white-space:nowrap;font-family:inherit;cursor:pointer}
+.mini-rose{background:var(--rose);color:#fff}
+.mini-soft{background:var(--sand);color:var(--brown)}
+.s-note{font-size:12px;color:var(--muted)}
+@media (max-width:480px){.row{grid-template-columns:78px 1fr auto}.r-t{font-size:13px}}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.bar i,.chev{transition:none}}
 </style>
 </head>
@@ -253,17 +280,21 @@ footer{padding-block:24px 40px;font-size:12px;color:var(--muted);text-align:cent
   </div>
 </section>
 
-<section id="rozklad" class="wrap schedule stack">
-  <span class="pill">Вступ + 6 онлайн-занять</span>
-  <h2>Розклад <span style="color:var(--rose)">онлайн-занять</span></h2>
-  <p>Вступне заняття в&nbsp;понеділок, 16&nbsp;листопада, далі щовівторка о&nbsp;19:00 за&nbsp;Києвом. Усі заняття проходять за&nbsp;одним посиланням у&nbsp;Zoom. До&nbsp;кожного з&nbsp;6 занять своя анкета: ваше ім'я, ім'я та&nbsp;вік собаки і&nbsp;питання.</p>
-  <p class="note-warn">При зміні ситуації в&nbsp;Україні або&nbsp;динаміки групи можливі зміни в&nbsp;розкладі, але&nbsp;попередньо працюємо за&nbsp;цим.</p>
-  <div class="cal stack">
-    <b style="font-size:15px">Додайте 6 занять по&nbsp;вівторках у&nbsp;свій Google Календар</b>
-    <div class="cal-row"><a class="chip chip-rose" data-cal href="#">📅 Додати 6 занять у&nbsp;календар</a></div>
-    <span class="hint">Одним кліком: щовівторка о&nbsp;19:00 з&nbsp;24.11 по&nbsp;29.12, у&nbsp;кожній події вже є&nbsp;посилання на&nbsp;Zoom</span>
-  </div>
-  <ol class="meet-list" id="meet-list"></ol>
+<section id="rozklad" class="wrap sched2">
+  <details class="sched" id="sched">
+    <summary>
+      <span class="s-ic">📅</span>
+      <span class="s-t"><b>Розклад онлайн-занять</b><span>Вступ 16.11 + 6 занять щовівторка о&nbsp;19:00 · до&nbsp;29.12</span></span>
+      <span class="s-chev" aria-hidden="true"></span>
+    </summary>
+    <div class="s-body">
+      <div class="s-actions">
+        <a class="chip chip-rose" data-cal href="#" target="_blank" rel="noopener">📅 Додати 6 занять у&nbsp;Google Календар</a>
+      </div>
+      <ol class="rows" id="meet-list"></ol>
+      <p class="s-note">Час за&nbsp;Києвом. При зміні ситуації в&nbsp;Україні або&nbsp;динаміки групи можливі зміни в&nbsp;розкладі, але&nbsp;попередньо працюємо за&nbsp;цим.</p>
+    </div>
+  </details>
 </section>
 
 <!-- СТАРТ -->
@@ -378,6 +409,7 @@ footer{padding-block:24px 40px;font-size:12px;color:var(--muted);text-align:cent
     lock:'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>'};
   document.querySelectorAll('[data-lock]').forEach(function(e){e.innerHTML=I.lock});
   document.querySelectorAll('[data-zoom]').forEach(function(a){a.href=ZOOM});
+  document.querySelectorAll('a[href="#rozklad"]').forEach(function(a){a.addEventListener('click',function(){document.getElementById('sched').open=true;});});
 
   function pad(n){return String(n).padStart(2,'0')}
   /* Google Календар: одна серія з 6 занять по вівторках (вступ 16.11 сюди не входить) */
@@ -447,15 +479,14 @@ footer{padding-block:24px 40px;font-size:12px;color:var(--muted);text-align:cent
   MEETINGS.forEach(function(m,i){
     var d=new Date(m.date+'T12:00:00+02:00'), past=nextIdx===-1||i<nextIdx, isNext=i===nextIdx;
     var acts = past
-      ? (m.rec?'<a class="chip chip-soft" href="'+esc(m.rec)+'">'+I.play+'Дивитись запис</a>':'<span class="chip chip-off">Запис з\'явиться тут</span>')
-      : '<a class="chip chip-rose" href="'+ZOOM+'">'+I.play+'Zoom</a>'+
-        (m.intro?'':(m.form?'<a class="chip chip-soft" href="'+esc(m.form)+'" target="_blank" rel="noopener">'+I.doc+'Анкета</a>':'<button class="chip chip-soft" data-form="'+i+'">'+I.doc+'Анкета</button>'));
+      ? (m.rec?'<a class="mini mini-soft" href="'+esc(m.rec)+'" target="_blank" rel="noopener">▶ Запис</a>':'<span class="mini mini-soft" style="opacity:.7">запис скоро</span>')
+      : '<a class="mini mini-rose" href="'+ZOOM+'" target="_blank" rel="noopener">Zoom</a>'+
+        (m.intro?'':(m.form?'<a class="mini mini-soft" href="'+esc(m.form)+'" target="_blank" rel="noopener">Анкета</a>':'<button class="mini mini-soft" data-form="'+i+'">Анкета</button>'));
     var li=document.createElement('li');
-    li.className='meet'+(isNext?' is-next':'')+(past?' is-past':'');
-    li.innerHTML='<div class="date"><b>'+d.getUTCDate()+'</b><span>'+MON_SHORT[d.getUTCMonth()]+'</span><small>'+DAYS[d.getUTCDay()]+'</small></div>'+
-      '<div class="meet-body">'+(isNext?'<span class="state state-next">Наступне</span>':(past?'<span class="state state-past">Пройшло</span>':''))+
-      '<span class="meet-meta">'+label(i)+' · '+DAYS[d.getUTCDay()]+', '+m.time+'</span>'+
-      '<span class="meet-title">'+nb(m.title)+'</span><div class="meet-actions">'+acts+'</div></div>';
+    li.className='row'+(isNext?' is-next':'')+(past?' is-past':'');
+    li.innerHTML='<span class="r-date">'+DAYS[d.getUTCDay()]+', '+pad(d.getUTCDate())+'.'+pad(d.getUTCMonth()+1)+'<small>'+m.time+'</small></span>'+
+      '<span class="r-t">'+(isNext?'<i>Наступне</i>':'')+esc(label(i))+'</span>'+
+      '<span class="r-a">'+acts+'</span>';
     list.appendChild(li);
   });
 
