@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Спокійний собака · навчальна платформа</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800;900&display=swap">
+<style>
+:root{
+  --paper:#FAF6F6; --sand:#F0E8E0; --ink:#232323; --muted:#6B5D52; --line:#E6DAD0;
+  --rose:#A85A5C; --rose-soft:#F3D7D7; --pink:#D48A8B; --olive:#6C794D; --olive-soft:#E4E8D8;
+  --brown:#403424; --brown-2:#54452F; --cream:#E3D8CE;
+  --font:'Onest',system-ui,-apple-system,'Segoe UI',sans-serif;
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--sand);color:var(--ink);font:16px/1.55 var(--font)}
+.page{max-width:760px;margin:0 auto;background:var(--paper);min-height:100vh}
+.wrap{padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+h1,h2,h3,p{margin:0}
+h1,h2{text-wrap:balance;font-weight:900;text-transform:uppercase;letter-spacing:-.01em}
+h1{font-size:clamp(30px,6vw,42px);line-height:1}
+h2{font-size:clamp(26px,5vw,32px);line-height:1.05}
+h3{font-size:18px;line-height:1.3;font-weight:800}
+a{color:var(--rose)}
+a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid var(--olive);outline-offset:2px}
+button{font:inherit;cursor:pointer}
+.stack{display:flex;flex-direction:column}
+.pill{display:inline-block;align-self:flex-start;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:6px 12px;border-radius:999px;background:var(--sand);color:var(--brown)}
+.ph{background:repeating-linear-gradient(-45deg,#fff8,#fff8 6px,transparent 6px,transparent 12px);outline:1.5px dashed var(--pink);outline-offset:-1.5px}
+.todo{font-size:12px;color:var(--rose);font-weight:700}
+
+/* шапка */
+.hero{padding-block:24px 30px;gap:16px}
+.brand{display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:13px;color:var(--muted);font-weight:600;flex-wrap:wrap}
+.h1-accent{display:inline-block;margin-top:8px;background:var(--pink);color:#fff;padding:2px 10px 4px;border-radius:12px;font-size:.82em}
+.hello{background:#fff;border-radius:22px;padding:18px 20px;gap:12px;box-shadow:0 8px 28px rgba(64,52,36,.08)}
+.steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.steps div{background:var(--sand);border-radius:16px;padding:12px;font-size:13px;line-height:1.35}
+.steps b{display:block;font-size:22px;font-weight:900;color:var(--olive);line-height:1.1;margin-bottom:4px}
+.x-progress{display:flex;align-items:center;gap:12px;font-size:14px;font-weight:700}
+.bar{flex:1;height:10px;background:var(--sand);border-radius:99px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--olive);border-radius:99px;transition:width .3s}
+@media (max-width:480px){.steps{grid-template-columns:1fr}}
+
+/* навігація */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:rgba(250,246,246,.96);backdrop-filter:blur(6px);border-block:1px solid var(--line);padding-block:10px;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none}
+.nav::-webkit-scrollbar{display:none}
+.nav a{flex:0 0 auto;text-decoration:none;font-size:14px;font-weight:700;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:999px;padding:8px 14px}
+.nav a:hover{border-color:var(--rose);color:var(--rose)}
+
+/* найближчий ефір */
+.next{padding-block:28px 8px}
+.live{background:var(--brown);color:var(--paper);border-radius:26px;padding:22px 20px;gap:12px}
+.live .when{font-size:28px;font-weight:900;line-height:1.1;text-transform:uppercase}
+.live .when span{color:#E8B4B5}
+.live p{color:var(--cream);font-size:15px}
+.live .topic{color:var(--paper);font-weight:700;font-size:17px;line-height:1.35}
+.live-badge{align-self:flex-start;font-size:12px;font-weight:800;letter-spacing:.08em;background:var(--pink);color:#fff;padding:6px 12px;border-radius:999px}
+.countdown{display:flex;gap:8px}
+.countdown div{background:var(--brown-2);border-radius:12px;padding:8px 12px;text-align:center;min-width:64px}
+.countdown b{display:block;font-size:22px;font-weight:900;font-variant-numeric:tabular-nums;line-height:1.1}
+.countdown span{font-size:11px;color:var(--cream);text-transform:uppercase;letter-spacing:.06em}
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;min-height:54px;border-radius:16px;padding:0 18px;font-weight:800;font-size:15px;text-decoration:none;text-align:center;border:0}
+.btn-rose{background:var(--rose);color:#fff}
+.btn-pink{background:var(--pink);color:var(--ink)}
+.btn-ghost{background:transparent;color:var(--paper);border:2px solid rgba(250,246,246,.35)}
+.btn-row{display:flex;flex-wrap:wrap;gap:8px}
+.btn-row .btn{flex:1 1 220px}
+
+/* розклад */
+.schedule{padding-block:44px;gap:16px}
+.schedule > p{color:#4A403A;font-size:15px}
+.meet-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.meet{background:#fff;border:1px solid var(--line);border-radius:20px;padding:16px;display:grid;grid-template-columns:68px 1fr;gap:14px;align-items:start}
+.meet.is-next{border:2px solid var(--rose);box-shadow:0 8px 24px rgba(168,90,92,.14)}
+.meet.is-past{opacity:.7}
+.date{border-radius:14px;background:var(--sand);text-align:center;padding:8px 0;line-height:1.1}
+.meet.is-next .date{background:var(--rose);color:#fff}
+.date b{display:block;font-size:26px;font-weight:900;font-variant-numeric:tabular-nums}
+.date span{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+.date small{display:block;font-size:11px;font-weight:700;margin-top:2px;opacity:.8}
+.meet-body{min-width:0;display:flex;flex-direction:column;gap:6px}
+.meet-meta{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--rose)}
+.meet-title{font-size:16px;font-weight:700;line-height:1.35}
+.meet-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:800;border-radius:12px;padding:9px 14px;min-height:42px;text-decoration:none;border:0}
+.chip-rose{background:var(--rose);color:#fff}
+.chip-soft{background:var(--sand);color:var(--brown)}
+.chip-off{background:var(--sand);color:var(--muted);font-weight:600}
+.state{font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;border-radius:999px;padding:3px 8px;align-self:flex-start}
+.state-next{background:var(--rose);color:#fff}
+.state-past{background:var(--sand);color:var(--muted)}
+
+/* модулі */
+.module{padding-block:44px;gap:16px;border-top:1px solid var(--line)}
+.module.tint{background:var(--sand)}
+.mod-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.mod-num{font-size:13px;font-weight:900;color:#fff;background:var(--olive);border-radius:10px;padding:4px 10px}
+.mod-num.dark{background:var(--brown)}
+.mod-count{font-size:13px;color:var(--muted);font-weight:600;margin-left:auto}
+.result{background:var(--olive);color:#fff;border-radius:18px;padding:14px 16px;font-size:15px}
+.lessons{display:flex;flex-direction:column;gap:10px}
+
+/* урок */
+.lesson{background:#fff;border-radius:22px;border:1px solid var(--line);overflow:hidden}
+.tint .lesson{border-color:transparent}
+.lesson-head{all:unset;box-sizing:border-box;display:flex;gap:12px;align-items:center;width:100%;padding:16px 18px;cursor:pointer}
+.lesson-head:focus-visible{outline:3px solid var(--olive);outline-offset:-3px;border-radius:22px}
+.lesson-n{flex:0 0 auto;font-size:12px;font-weight:800;color:var(--rose);background:var(--rose-soft);border-radius:8px;padding:3px 8px;white-space:nowrap}
+.lesson-t{flex:1;min-width:0}
+.lesson-t h3{font-size:17px}
+.lesson-t .meta{font-size:13px;color:var(--muted);margin-top:2px;display:flex;gap:10px;flex-wrap:wrap}
+.done-dot{flex:0 0 auto;width:28px;height:28px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;color:transparent}
+.lesson.done .done-dot{background:var(--olive);border-color:var(--olive);color:#fff}
+.chev{flex:0 0 auto;transition:transform .2s;color:var(--muted)}
+.lesson.open .chev{transform:rotate(180deg)}
+.lesson-body{display:none;padding:0 18px 18px;gap:14px}
+.lesson.open .lesson-body{display:flex}
+.tabs{display:flex;gap:6px;background:var(--sand);border-radius:14px;padding:4px}
+.tab{flex:1;border:0;background:transparent;border-radius:10px;padding:10px 8px;font-weight:700;font-size:14px;color:var(--muted);display:flex;align-items:center;justify-content:center;gap:6px;min-height:44px}
+.tab[aria-selected="true"]{background:#fff;color:var(--ink);box-shadow:0 2px 8px rgba(64,52,36,.08)}
+.panel{display:none}
+.panel.active{display:block}
+.video{position:relative;aspect-ratio:16/9;border-radius:16px;background:var(--brown);color:var(--cream);display:grid;place-items:center;overflow:hidden}
+.video .play{width:68px;height:68px;border-radius:50%;background:var(--pink);display:grid;place-items:center;color:#fff}
+.video .cap{position:absolute;left:14px;bottom:12px;right:14px;display:flex;justify-content:space-between;font-size:13px;font-weight:600;gap:8px}
+.video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.notes{background:var(--paper);border-radius:16px;padding:16px;gap:10px}
+.notes ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:6px;font-size:15px}
+.notes li{padding-left:20px;position:relative}
+.notes li::before{content:"";position:absolute;left:4px;top:.6em;width:7px;height:7px;border-radius:50%;background:var(--rose)}
+.file{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px 14px;text-decoration:none;color:var(--ink)}
+.file .ic{flex:0 0 auto;width:40px;height:40px;border-radius:10px;background:var(--rose-soft);color:var(--rose);display:grid;place-items:center;font-weight:900;font-size:12px}
+.file b{display:block;font-size:15px}
+.file span{font-size:13px;color:var(--muted)}
+.text-body{font-size:16px;line-height:1.65;display:flex;flex-direction:column;gap:12px;color:#3A322C}
+.text-body h4{margin:6px 0 0;font-size:17px;color:var(--ink)}
+.text-body .ph{border-radius:12px;padding:14px;color:var(--muted);font-size:14px}
+.hw{background:var(--olive-soft);border-radius:16px;padding:14px 16px;gap:6px}
+.hw-label{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#4E5838}
+.hw p{font-size:14px;line-height:1.5}
+.mark{align-self:flex-start;display:inline-flex;align-items:center;gap:8px;border:2px solid var(--olive);background:transparent;color:var(--olive);border-radius:12px;padding:9px 14px;font-weight:800;font-size:14px;min-height:44px}
+.lesson.done .mark{background:var(--olive);color:#fff}
+.mod-meet{background:var(--paper);border:2px dashed var(--pink);border-radius:20px;padding:16px 18px;gap:8px}
+.tint .mod-meet{background:#fff}
+.mod-meet .k{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--rose)}
+.mod-meet p{font-size:15px}
+.mod-meet button{all:unset;cursor:pointer;color:var(--rose);font-weight:700;font-size:15px}
+
+/* бонуси */
+.bonus{padding-block:44px;gap:14px;border-top:1px solid var(--line)}
+.bonus-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.b-card{background:#fff;border-radius:20px;padding:16px;gap:8px;border:1px solid var(--line)}
+.b-card .n{font-size:24px;font-weight:900;color:var(--pink);line-height:1}
+.b-card p{font-size:14px;color:#4A403A}
+.b-card a{font-weight:800;font-size:14px;margin-top:auto}
+
+.help{padding-block:40px;gap:14px;background:var(--sand)}
+.help-row{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.avatar{flex:0 0 64px;height:64px;border-radius:50%;background:var(--olive);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:24px}
+.help-row > div{flex:1 1 220px;min-width:0}
+footer{padding-block:24px 40px;font-size:12px;color:var(--muted);text-align:center;gap:6px}
+
+/* анкета (модалка) */
+.modal{position:fixed;inset:0;z-index:20;background:rgba(35,35,35,.55);display:none;align-items:flex-end;justify-content:center;padding:12px}
+.modal.open{display:flex}
+@media (min-width:600px){.modal{align-items:center}}
+.sheet{background:var(--paper);border-radius:24px;width:100%;max-width:520px;max-height:92vh;overflow:auto;padding:22px 20px;gap:14px}
+.sheet-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.x{border:0;background:var(--sand);border-radius:50%;width:40px;height:40px;flex:0 0 auto;font-size:20px;line-height:1}
+.gf{background:#fff;border-radius:16px;border-top:8px solid var(--rose);padding:16px;gap:14px}
+.field{display:flex;flex-direction:column;gap:6px}
+.field label{font-size:14px;font-weight:700}
+.field label i{color:var(--rose);font-style:normal}
+.field input,.field textarea{font:inherit;font-size:16px;border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:var(--paper);color:var(--ink)}
+.field textarea{min-height:110px;resize:vertical}
+.hint{font-size:12px;color:var(--muted)}
+.mock-note{font-size:13px;background:var(--rose-soft);color:#6E3335;border-radius:12px;padding:10px 12px}
+.sent{display:none;text-align:center;gap:8px;padding:12px 0}
+.sent.show{display:flex}
+
+.locked{position:relative;border-radius:22px;overflow:hidden}
+.locked .blur{filter:blur(6px);opacity:.75;pointer-events:none;user-select:none}
+.lock-ov{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;padding:20px;background:rgba(250,246,246,.35)}
+.tint .lock-ov{background:rgba(240,232,224,.35)}
+.lock-ic{width:56px;height:56px;border-radius:50%;background:var(--brown);color:#fff;display:grid;place-items:center;box-shadow:0 8px 24px rgba(64,52,36,.25)}
+.lock-ov b{font-size:17px;font-weight:800;background:#fff;border-radius:12px;padding:8px 14px;box-shadow:0 4px 16px rgba(64,52,36,.1)}
+.note-warn{background:#fff;border-left:4px solid var(--pink);border-radius:12px;padding:12px 14px;font-size:14px;color:#4A403A}
+.cal{background:#fff;border:1px solid var(--line);border-radius:20px;padding:16px;gap:10px}
+.cal-row{display:flex;flex-wrap:wrap;gap:8px}
+.cal-row .chip{flex:1 1 220px;justify-content:center}
+.zoom-card{background:#fff;border:2px dashed var(--pink);border-radius:22px;padding:18px;gap:10px}
+.videos{display:flex;flex-direction:column;gap:12px}
+.vlabel{font-size:13px;font-weight:800;color:var(--rose);margin-bottom:6px}
+.ytlink{display:inline-block;margin-top:6px;font-size:13px;font-weight:600;color:var(--muted)}
+.video .play svg{width:28px;height:28px}
+
+.cover{all:unset;box-sizing:border-box;position:absolute;inset:0;cursor:pointer;display:flex;flex-direction:column;justify-content:space-between;padding:clamp(14px,4vw,24px);color:#fff;overflow:hidden;text-decoration:none;background:var(--cbg,var(--brown))}
+.cover:focus-visible{outline:3px solid var(--olive);outline-offset:-3px;border-radius:16px}
+.cover .paws{position:absolute;right:-8px;top:-4px;width:40%;height:auto;opacity:.13;color:#fff;pointer-events:none}
+.cover .c-top{display:flex;gap:6px;flex-wrap:wrap;position:relative}
+.cover .c-pill{font-size:clamp(10px,2.4vw,12px);font-weight:800;letter-spacing:.08em;text-transform:uppercase;background:rgba(255,255,255,.18);border-radius:999px;padding:5px 10px}
+.cover .c-pill.hot{background:var(--pink);color:#fff}
+.cover .c-title{position:relative;font-weight:900;text-transform:uppercase;line-height:1;letter-spacing:-.01em;font-size:clamp(20px,5.6vw,34px);max-width:78%;text-wrap:balance}
+.cover .c-title span{color:var(--cacc,#E8B4B5)}
+.cover .c-bot{position:relative;display:flex;justify-content:space-between;align-items:flex-end;gap:12px}
+.cover .c-by{font-size:clamp(11px,2.6vw,13px);font-weight:600;opacity:.85;line-height:1.3}
+.cover .c-play{flex:0 0 auto;width:clamp(48px,12vw,64px);height:clamp(48px,12vw,64px);border-radius:50%;background:#fff;color:var(--cbg,var(--brown));display:grid;place-items:center;box-shadow:0 8px 24px rgba(0,0,0,.25);transition:transform .15s}
+.cover:hover .c-play{transform:scale(1.07)}
+.cover .c-play svg{width:42%;height:42%;margin-left:6%}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.bar i,.chev{transition:none}}
+</style>
+</head>
+<body>
+<div class="page">
+
+<header class="wrap hero stack">
+  <div class="brand"><span>Наталка Виноградська · кінологиня</span><span class="pill">Навчальна платформа</span></div>
+  <h1>Спокійний собака<br><span class="h1-accent">на&nbsp;вулиці і&nbsp;вдома</span></h1>
+  <div class="hello stack">
+    <p style="font-size:18px;font-weight:800">Вітаю на&nbsp;курсі! Рада, що&nbsp;ви&nbsp;тут.</p>
+    <p style="font-size:15px;color:#4A403A">Тут зібрано все для&nbsp;навчання: відеоуроки, конспекти, розклад онлайн-занять і&nbsp;їх&nbsp;записи. Нові уроки з'являються поступово, йдіть по&nbsp;порядку: кожен урок спирається на&nbsp;попередній.</p>
+    <div class="steps">
+      <div><b>1</b>Дивіться відеоурок і&nbsp;зберігайте конспект</div>
+      <div><b>2</b>Тренуйтеся <b style="display:inline;font-size:inherit;color:var(--rose)">15–20&nbsp;хв</b> на&nbsp;звичайній прогулянці</div>
+      <div><b>3</b>Заповнюйте анкету й&nbsp;приходьте на&nbsp;онлайн-заняття</div>
+    </div>
+  </div>
+</header>
+
+<nav class="nav wrap" aria-label="Розділи курсу">
+  <a href="#rozklad">Розклад занять</a>
+  <a href="#start">Старт</a>
+  <a href="#vulytsia">1 · На вулиці</a>
+</nav>
+
+<section class="wrap next" aria-labelledby="next-h">
+  <div class="live stack">
+    <span class="live-badge" id="next-badge">Найближче онлайн-заняття</span>
+    <h2 id="next-h" class="when"><span id="next-date"></span> · <span id="next-time"></span></h2>
+    <p class="topic" id="next-topic"></p>
+    <div class="countdown" id="countdown" aria-live="off"></div>
+    <p>Підключайтеся за&nbsp;кілька хвилин до&nbsp;початку.<span id="next-note"> Заповніть анкету заздалегідь, щоб&nbsp;Наталка встигла розібрати вашу собаку.</span></p>
+    <div class="btn-row">
+      <a class="btn btn-pink" data-zoom href="#">Підключитися в&nbsp;Zoom</a>
+      <a class="btn btn-ghost" id="next-form" href="#" target="_blank" rel="noopener">Заповнити анкету</a>
+    </div>
+  </div>
+</section>
+
+<section id="rozklad" class="wrap schedule stack">
+  <span class="pill">Вступ + 6 онлайн-занять</span>
+  <h2>Розклад <span style="color:var(--rose)">онлайн-занять</span></h2>
+  <p>Вступне заняття в&nbsp;понеділок, 16&nbsp;листопада, далі щовівторка о&nbsp;19:00 за&nbsp;Києвом. Усі заняття проходять за&nbsp;одним посиланням у&nbsp;Zoom. До&nbsp;кожного з&nbsp;6 занять своя анкета: ваше ім'я, ім'я та&nbsp;вік собаки і&nbsp;питання.</p>
+  <p class="note-warn">При зміні ситуації в&nbsp;Україні або&nbsp;динаміки групи можливі зміни в&nbsp;розкладі, але&nbsp;попередньо працюємо за&nbsp;цим.</p>
+  <div class="cal stack">
+    <b style="font-size:15px">Додайте 6 занять по&nbsp;вівторках у&nbsp;свій Google Календар</b>
+    <div class="cal-row"><a class="chip chip-rose" data-cal href="#">📅 Додати 6 занять у&nbsp;календар</a></div>
+    <span class="hint">Одним кліком: щовівторка о&nbsp;19:00 з&nbsp;24.11 по&nbsp;29.12, у&nbsp;кожній події вже є&nbsp;посилання на&nbsp;Zoom</span>
+  </div>
+  <ol class="meet-list" id="meet-list"></ol>
+</section>
+
+<!-- СТАРТ -->
+<section id="start" class="wrap module stack">
+  <div class="mod-head"><span class="mod-num dark">СТАРТ</span><span class="pill">Вступ</span></div>
+  <h2>Чому вона так робить<br><span style="color:var(--rose)">і&nbsp;чому ви&nbsp;не&nbsp;винні</span></h2>
+  <p style="color:#4A403A">Почніть звідси. Розберемо, чому собака поводиться саме так, де&nbsp;знайти час на&nbsp;тренування і&nbsp;як&nbsp;пройти курс, щоб&nbsp;отримати результат.</p>
+  <div class="zoom-card stack">
+    <span class="mod-meet k" style="all:unset;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--rose)">Розбираємо наживо</span>
+    <h3>Вступ розберемо на&nbsp;онлайн-зустрічі <span style="color:var(--rose)">16.11 о&nbsp;18:00</span></h3>
+    <p style="font-size:15px;color:#4A403A">Чому собака не&nbsp;слухається, де&nbsp;знайти час на&nbsp;тренування і&nbsp;як&nbsp;пройти курс з&nbsp;максимальною користю. Після зустрічі тут з'явиться запис.</p>
+    <div class="video"><span class="play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span><span class="cap"><span>Запис вступної зустрічі</span><span>з'явиться після 16.11</span></span></div>
+    <a class="btn btn-rose" data-zoom href="#">Підключитися в&nbsp;Zoom · 16.11 о&nbsp;18:00</a>
+  </div>
+</section>
+
+<!-- МОДУЛЬ 1 -->
+<section id="vulytsia" class="wrap module tint stack">
+  <div class="mod-head"><span class="mod-num">1</span><span class="pill" style="background:#fff">Модуль 1</span></div>
+  <h2>Спокійний собака<br><span style="color:var(--rose)">на&nbsp;вулиці</span></h2>
+  <p class="result"><b>Результат: прогулянка знову в&nbsp;радість. Собака не&nbsp;тягне, нічого не&nbsp;підбирає, чує вас.</b></p>
+  <div class="lessons" id="m1-lessons"></div>
+  <div class="locked">
+    <div class="blur lessons">
+      <article class="lesson"><div class="lesson-head"><span class="lesson-t"><span class="lesson-n">Модуль 1</span><h3 style="margin-top:6px">Проходимо повз тригер спокійно</h3></span></div></article>
+      <article class="lesson"><div class="lesson-head"><span class="lesson-t"><span class="lesson-n">Модуль 2</span><h3 style="margin-top:6px">Спокійний собака вдома</h3></span></div></article>
+      <article class="lesson"><div class="lesson-head"><span class="lesson-t"><span class="lesson-n">Модуль 3</span><h3 style="margin-top:6px">Сама вдома без&nbsp;виття</h3></span></div></article>
+    </div>
+    <div class="lock-ov"><span class="lock-ic" data-lock></span><b>Наступні блоки будуть додаватись поступово</b></div>
+  </div>
+</section>
+
+<section class="wrap help stack">
+  <div class="help-row">
+    <span class="avatar" aria-hidden="true">?</span>
+    <div><h3>Технічні питання</h3>
+    <p style="font-size:15px;color:#4A403A;margin-top:4px">Не&nbsp;відкривається урок, Zoom чи&nbsp;посилання? Напишіть у&nbsp;Telegram, допоможемо. Питання про&nbsp;вашу собаку несіть на&nbsp;онлайн-заняття через&nbsp;анкету.</p></div>
+  </div>
+  <a class="btn btn-rose" data-tg href="https://t.me/kateryna_mogilevska">Написати з&nbsp;технічного питання</a>
+</section>
+
+<footer class="wrap stack">
+  <p>Наталка Виноградська · «Спокійний собака на&nbsp;вулиці і&nbsp;вдома» · навчальна платформа</p>
+</footer>
+</div>
+
+<!-- Анкета до заняття -->
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="m-title">
+  <div class="sheet stack">
+    <div class="sheet-top">
+      <div class="stack" style="gap:4px"><span class="meet-meta" id="m-meta"></span><h3 id="m-title">Анкета до&nbsp;онлайн-заняття</h3></div>
+      <button class="x" id="m-close" aria-label="Закрити">×</button>
+    </div>
+    <p class="mock-note">Це макет анкети. У&nbsp;робочій версії кнопка відкриватиме Google Форму саме цього заняття.</p>
+    <form class="gf stack" id="gf">
+      <div class="field"><label for="f1">Ваше ім'я <i>*</i></label><input id="f1" required autocomplete="given-name"></div>
+      <div class="field"><label for="f2">Ім'я собаки <i>*</i></label><input id="f2" required></div>
+      <div class="field"><label for="f3">Вік собаки <i>*</i></label><input id="f3" required placeholder="наприклад, 1 рік 3 місяці"></div>
+      <div class="field"><label for="f4">Ваше питання до&nbsp;заняття <i>*</i></label><textarea id="f4" required placeholder="Опишіть ситуацію: що&nbsp;робить собака, коли і&nbsp;де, що&nbsp;ви&nbsp;вже пробували"></textarea><span class="hint">Чим конкретніше, тим точніше Наталка зможе відповісти</span></div>
+      <button class="btn btn-rose" type="submit">Надіслати</button>
+    </form>
+    <div class="sent stack" id="sent"><p style="font-size:40px">🐾</p><h3>Дякуємо!</h3><p style="color:var(--muted);font-size:15px">У&nbsp;робочій версії відповідь потрапить у&nbsp;Google Таблицю заняття.</p></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  /* ───────── НАЛАШТУВАННЯ ───────── */
+  var ZOOM = 'https://us02web.zoom.us/j/88411728068?pwd=l4JUBqKTgbLpyakFsPZCT1CdAc8UD7.1';
+  var CAL_TITLE = 'Онлайн урок з Наталкою на курсі "Спокійний собака на вулиці і вдома"';
+  var DURATION_MIN = 60;
+  var TG_TECH = 'https://t.me/kateryna_mogilevska';
+  /* form — посилання на Google Форму заняття, rec — запис */
+  var MEETINGS = [
+    {date:'2026-11-16', time:'18:00', intro:true, title:'Вступ: чому собака так робить, де знайти час і як пройти курс', rec:''},
+    {date:'2026-11-24', time:'19:00', title:'Контакт, прогулянка і харчова мотивація', form:'https://docs.google.com/forms/d/e/1FAIpQLSfCcpNhTKhMnfTl7tieX0HUHB2s37qCA57nU0ZjFFqjcLuSgQ/viewform', rec:''},
+    {date:'2026-12-01', time:'19:00', title:'Онлайн заняття з Наталкою', form:'https://docs.google.com/forms/d/e/1FAIpQLSfRKAeFS2eKNRtEF9Dnloj-EJ3IO_41730yceRHcUcBUiKM1g/viewform', rec:''},
+    {date:'2026-12-08', time:'19:00', title:'Онлайн заняття з Наталкою', form:'https://docs.google.com/forms/d/e/1FAIpQLSdu9Xu3HJLwYeeLkDtnW4SjdDhAJWun9dcK6BDacEdCSsmhdw/viewform', rec:''},
+    {date:'2026-12-15', time:'19:00', title:'Онлайн заняття з Наталкою', form:'https://docs.google.com/forms/d/e/1FAIpQLSdgUdU6qoqttgOb2qqTnZlfJo_NhMDVsBxDhlqqdT2YBIwKog/viewform', rec:''},
+    {date:'2026-12-22', time:'19:00', title:'Онлайн заняття з Наталкою', form:'https://docs.google.com/forms/d/e/1FAIpQLSe0CDjXK0F7QUclOvYxeED0F8SFydQS5wrSZ1twAF0gArfyjg/viewform', rec:''},
+    {date:'2026-12-29', time:'19:00', title:'Онлайн заняття з Наталкою', form:'https://docs.google.com/forms/d/e/1FAIpQLSd97Rziy0A4eGp8_U8ftKYqKBvRwZUv6L0RGNYD6DEiY1QY-w/viewform', rec:''}
+  ];
+  /* Уроки модуля 1, що відкриті зараз. videos — посилання на відео, pdf — конспект */
+  var LESSONS = [
+    {n:'1.1', t:'Контакт та прогулянка', ct:['Контакт','та прогулянка'], bg:'#403424', acc:'#E8B4B5', videos:[{label:'Відеоурок', yt:'9EtgbXSTpz4'}], pdf:'pdf/kontakt-i-prohulianka-konspekt.pdf', pages:16,
+     pts:['Прогулянка — компроміс: приблизно 80% того, що потрібно собаці, і 20% дисципліни для вашого комфорту',
+          'Спершу ваші правила, потім собачі бажання: тренуємося до того, як собака нагуляється',
+          'Правило дверей: ломишся — двері зачиняються, чекаєш — відчиняються',
+          'Вправа «Очі» перед дверима квартири, під\'їзду і перед довгим повідком',
+          'Собака не мусить весь час іти біля ноги, але має вміти ходити поруч за командою',
+          'Голос — найпотужніший інструмент спілкування з собакою']},
+    {n:'1.2', t:'Харчова мотивація', ct:['Харчова','мотивація'], bg:'#A85A5C', acc:'#FFE3D6', videos:[{label:'Відеоурок', yt:'SCpT64Ol5yo'}], pdf:'pdf/kharchova-motyvatsiya-konspekt.pdf', pages:12,
+     pts:['П\'ять причин, чому собака не їсть на вулиці, і що робити з кожною',
+          'Забагато смачненького вдома — так приблизно у 80% випадків',
+          'Собака не знає, що за їжу можна щось робити',
+          'Замала відстань до тригерів',
+          'Їжа як хабар, а не винагорода',
+          'Собаці просто не смачно: на прогулянку беріть щось справді смачне']},
+    {n:'1.3', t:'Гра для підняття харчової мотивації', ct:['Гра для підняття','харчової мотивації'], bg:'#6C794D', acc:'#F3E6B8', videos:[{label:'Відео 1', yt:'dAxRP7UE2EA'},{label:'Відео 2', yt:'fn8PaPNI0HQ'}]}
+  ];
+  /* ──────────────────────────────── */
+
+  var DAYS=['нд','пн','вт','ср','чт','пт','сб'];
+  var MONTHS=['січня','лютого','березня','квітня','травня','червня','липня','серпня','вересня','жовтня','листопада','грудня'];
+  var MON_SHORT=['січ','лют','бер','кві','тра','чер','лип','сер','вер','жов','лис','гру'];
+  function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+  function nb(s){return esc(s).replace(/ (\S{1,3}) /g,' $1&nbsp;');}
+  function PAW(x,y,r){return '<g transform="translate('+x+' '+y+') rotate('+r+')"><ellipse cx="0" cy="8" rx="9" ry="7.5"/><circle cx="-9" cy="-4" r="3.6"/><circle cx="-3.2" cy="-9" r="3.6"/><circle cx="3.2" cy="-9" r="3.6"/><circle cx="9" cy="-4" r="3.6"/></g>';}
+  var I={play:'<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>',
+    doc:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></svg>',
+    chev:'<svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>',
+    lock:'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>'};
+  document.querySelectorAll('[data-lock]').forEach(function(e){e.innerHTML=I.lock});
+  document.querySelectorAll('[data-zoom]').forEach(function(a){a.href=ZOOM});
+
+  function pad(n){return String(n).padStart(2,'0')}
+  /* Google Календар: одна серія з 6 занять по вівторках (вступ 16.11 сюди не входить) */
+  function gstamp(date,time,addMin){var p=date.split('-'),t=time.split(':');
+    var d=new Date(Date.UTC(+p[0],p[1]-1,+p[2],+t[0],+t[1]+(addMin||0)));
+    return d.getUTCFullYear()+pad(d.getUTCMonth()+1)+pad(d.getUTCDate())+'T'+pad(d.getUTCHours())+pad(d.getUTCMinutes())+'00';}
+  var tues=MEETINGS.filter(function(m){return !m.intro}), f=tues[0];
+  var CAL_LINK='https://calendar.google.com/calendar/render?action=TEMPLATE'+
+    '&text='+encodeURIComponent(CAL_TITLE)+
+    '&dates='+gstamp(f.date,f.time)+'/'+gstamp(f.date,f.time,DURATION_MIN)+
+    '&ctz=Europe/Kyiv'+
+    '&recur='+encodeURIComponent('RRULE:FREQ=WEEKLY;COUNT='+tues.length)+
+    '&details='+encodeURIComponent(CAL_TITLE+'\n\nПідключитися в Zoom: '+ZOOM)+
+    '&location='+encodeURIComponent(ZOOM);
+  document.querySelectorAll('[data-cal]').forEach(function(a){a.href=CAL_LINK});
+  document.querySelectorAll('[data-tg]').forEach(function(a){a.href=TG_TECH});
+
+  /* ── Уроки ── */
+  var html='';
+  LESSONS.forEach(function(l){
+    var id='l'+l.n.replace('.','-'), hasPdf=!!l.pdf;
+    var inPreview=/claude/.test(location.hostname);
+    var vids='<div class="videos">'+l.videos.map(function(v){
+      var watch='https://youtu.be/'+v.yt;
+      var inner='<svg class="paws" viewBox="0 0 120 100" fill="currentColor" aria-hidden="true">'+PAW(20,60,0)+PAW(55,30,15)+PAW(92,8,30)+'</svg>'+
+        '<span class="c-top"><span class="c-pill hot">Урок '+l.n+'</span><span class="c-pill">'+(l.videos.length>1?esc(v.label):'Модуль 1 · На вулиці')+'</span></span>'+
+        '<span class="c-title">'+esc(l.ct[0])+'<br><span>'+esc(l.ct[1])+'</span></span>'+
+        '<span class="c-bot"><span class="c-by">Наталка Виноградська<br>«Спокійний собака на вулиці і вдома»</span><span class="c-play">'+I.play+'</span></span>';
+      var style=' style="--cbg:'+l.bg+';--cacc:'+l.acc+'"';
+      var player = inPreview
+        ? '<a class="cover" href="'+watch+'" target="_blank" rel="noopener"'+style+' aria-label="Дивитись: '+esc(l.t+' · '+v.label)+'">'+inner+'</a>'
+        : '<button class="cover" data-yt="'+v.yt+'"'+style+' aria-label="Відтворити: '+esc(l.t+' · '+v.label)+'">'+inner+'</button>';
+      return '<div>'+(l.videos.length>1?'<div class="vlabel">'+esc(v.label)+'</div>':'')+'<div class="video">'+player+'</div>'+
+        '<a class="ytlink" href="'+watch+'">Не відкривається відео? Дивитись на YouTube ↗</a></div>';}).join('')+'</div>';
+    var meta='▶ '+(l.videos.length>1?l.videos.length+' відео':'Відео')+(hasPdf?' · Конспект PDF':'');
+    html+='<article class="lesson" id="'+id+'">'+
+      '<button class="lesson-head" aria-expanded="false" aria-controls="'+id+'-b">'+
+        '<span class="lesson-t"><span class="lesson-n">Урок '+l.n+'</span><h3 style="margin-top:6px">'+nb(l.t)+'</h3><span class="meta"><span>'+meta+'</span></span></span>'+I.chev+
+      '</button><div class="lesson-body stack" id="'+id+'-b">'+
+      (hasPdf?'<div class="tabs" role="tablist"><button class="tab" role="tab" aria-selected="true" data-p="v">'+I.play+'Відео</button><button class="tab" role="tab" aria-selected="false" data-p="n">'+I.doc+'Конспект</button></div>':'')+
+      '<div class="panel active" data-p="v">'+vids+'</div>'+
+      (hasPdf?'<div class="panel" data-p="n"><div class="notes stack"><span class="hw-label" style="color:var(--rose)">Ключові тези уроку</span><ul>'+(l.pts||[]).map(function(p){return '<li>'+nb(p)+'</li>'}).join('')+'</ul>'+
+        '<a class="file" href="'+esc(l.pdf)+'" target="_blank" rel="noopener"><span class="ic">PDF</span><span><b>Конспект уроку '+l.n+': '+esc(l.t)+'</b><span>'+(l.pages?l.pages+' сторінок · ':'')+'відкрити, зберегти, роздрукувати</span></span></a></div></div>':'')+
+      '</div></article>';
+  });
+  var box=document.getElementById('m1-lessons'); box.innerHTML=html;
+  box.addEventListener('click',function(e){
+    var h=e.target.closest('.lesson-head');
+    if(h){var a=h.parentNode;a.classList.toggle('open');h.setAttribute('aria-expanded',a.classList.contains('open'));return;}
+    var cv=e.target.closest('button.cover');
+    if(cv){var ttl=cv.getAttribute('aria-label');var f=document.createElement('iframe');
+      f.src='https://www.youtube-nocookie.com/embed/'+cv.dataset.yt+'?autoplay=1&rel=0';
+      f.allow='autoplay; accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen';f.allowFullscreen=true;f.title=ttl;
+      cv.replaceWith(f);return;}
+    var t=e.target.closest('.tab');
+    if(t){var body=t.closest('.lesson-body');
+      body.querySelectorAll('.tab').forEach(function(x){x.setAttribute('aria-selected',x===t)});
+      body.querySelectorAll('.panel').forEach(function(p){p.classList.toggle('active',p.dataset.p===t.dataset.p)});}
+  });
+
+  /* ── Розклад ── */
+  function label(i){return MEETINGS[i].intro?'Вступна зустріч':'Заняття '+i;}
+  function startOf(m){return new Date(m.date+'T'+m.time+':00+02:00').getTime();}
+  var now=Date.now(), nextIdx=-1;
+  for(var i=0;i<MEETINGS.length;i++){if(startOf(MEETINGS[i])+2*3600e3>now){nextIdx=i;break;}}
+  var list=document.getElementById('meet-list');
+  MEETINGS.forEach(function(m,i){
+    var d=new Date(m.date+'T12:00:00+02:00'), past=nextIdx===-1||i<nextIdx, isNext=i===nextIdx;
+    var acts = past
+      ? (m.rec?'<a class="chip chip-soft" href="'+esc(m.rec)+'">'+I.play+'Дивитись запис</a>':'<span class="chip chip-off">Запис з\'явиться тут</span>')
+      : '<a class="chip chip-rose" href="'+ZOOM+'">'+I.play+'Zoom</a>'+
+        (m.intro?'':(m.form?'<a class="chip chip-soft" href="'+esc(m.form)+'" target="_blank" rel="noopener">'+I.doc+'Анкета</a>':'<button class="chip chip-soft" data-form="'+i+'">'+I.doc+'Анкета</button>'));
+    var li=document.createElement('li');
+    li.className='meet'+(isNext?' is-next':'')+(past?' is-past':'');
+    li.innerHTML='<div class="date"><b>'+d.getUTCDate()+'</b><span>'+MON_SHORT[d.getUTCMonth()]+'</span><small>'+DAYS[d.getUTCDay()]+'</small></div>'+
+      '<div class="meet-body">'+(isNext?'<span class="state state-next">Наступне</span>':(past?'<span class="state state-past">Пройшло</span>':''))+
+      '<span class="meet-meta">'+label(i)+' · '+DAYS[d.getUTCDay()]+', '+m.time+'</span>'+
+      '<span class="meet-title">'+nb(m.title)+'</span><div class="meet-actions">'+acts+'</div></div>';
+    list.appendChild(li);
+  });
+
+  /* ── Найближче заняття ── */
+  var cd=document.getElementById('countdown');
+  if(nextIdx>-1){
+    var nm=MEETINGS[nextIdx], nd=new Date(nm.date+'T12:00:00+02:00');
+    document.getElementById('next-date').textContent=DAYS[nd.getUTCDay()]+', '+nd.getUTCDate()+' '+MONTHS[nd.getUTCMonth()];
+    document.getElementById('next-time').textContent=nm.time;
+    document.getElementById('next-topic').textContent=label(nextIdx)+'. '+nm.title;
+    if(nm.intro){document.getElementById('next-form').style.display='none';document.getElementById('next-note').style.display='none';}else{var nf=document.getElementById('next-form');if(nm.form)nf.href=nm.form;else{nf.removeAttribute('target');nf.dataset.form=nextIdx;}}
+    var tick=function(){var s=Math.max(0,Math.floor((startOf(nm)-Date.now())/1000));
+      cd.innerHTML='<div><b>'+Math.floor(s/86400)+'</b><span>днів</span></div><div><b>'+Math.floor(s%86400/3600)+'</b><span>годин</span></div><div><b>'+Math.floor(s%3600/60)+'</b><span>хвилин</span></div>';};
+    tick();setInterval(tick,30000);
+  } else {
+    document.getElementById('next-badge').textContent='Усі заняття пройшли';
+    document.getElementById('next-h').textContent='Записи всіх занять';
+    document.getElementById('next-topic').textContent='Записи онлайн-занять лежать у розкладі нижче.';
+    document.querySelector('.live .btn-row').style.display='none';cd.style.display='none';
+  }
+
+  /* ── Анкета ── */
+  var modal=document.getElementById('modal'), gf=document.getElementById('gf'), sent=document.getElementById('sent');
+  function openForm(i){var m=MEETINGS[i];
+    if(m.form){location.href=m.form;return;}
+    var d=new Date(m.date+'T12:00:00+02:00');
+    document.getElementById('m-meta').textContent=label(i)+' · '+DAYS[d.getUTCDay()]+', '+pad(d.getUTCDate())+'.'+pad(d.getUTCMonth()+1)+' · '+m.time;
+    gf.style.display='';sent.classList.remove('show');gf.reset();
+    modal.classList.add('open');document.getElementById('f1').focus();}
+  function closeForm(){modal.classList.remove('open');}
+  document.addEventListener('click',function(e){var b=e.target.closest('[data-form]');if(b&&b.dataset.form!==undefined&&!MEETINGS[+b.dataset.form].form){e.preventDefault();openForm(+b.dataset.form);}});
+  document.getElementById('m-close').onclick=closeForm;
+  modal.addEventListener('click',function(e){if(e.target===modal)closeForm();});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeForm();});
+  gf.addEventListener('submit',function(e){e.preventDefault();gf.style.display='none';sent.classList.add('show');});
+})();
+</script>
+</body>
+</html>
