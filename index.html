@@ -255,11 +255,27 @@ a.bn:hover{border-color:var(--rose)}
 .bn-links{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
 .bn-links a{font-size:12.5px;font-weight:800;color:var(--rose);background:var(--rose-soft);border-radius:8px;padding:4px 10px;text-decoration:none}
 @media (min-width:640px){.bn-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+
+@keyframes hwpulse{0%{box-shadow:0 0 0 0 rgba(212,138,139,.75)}70%{box-shadow:0 0 0 14px rgba(212,138,139,0)}100%{box-shadow:0 0 0 0 rgba(212,138,139,0)}}
+@keyframes hwblink{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}
+.hw-dot{flex:0 0 auto;width:40px;height:40px;border-radius:50%;background:#2AABEE;color:#fff;display:grid;place-items:center;animation:hwpulse 1.6s infinite,hwblink 1.6s infinite}
+.hw-dot svg{width:20px;height:20px;margin-left:-2px}
+.hw-fab{position:fixed;z-index:15;right:max(16px,env(safe-area-inset-right,0px));bottom:max(16px,env(safe-area-inset-bottom,0px));display:flex;align-items:center;gap:10px;background:var(--brown);color:#fff;text-decoration:none;border-radius:999px;padding:6px 16px 6px 6px;font-weight:800;font-size:14px;box-shadow:0 10px 30px rgba(64,52,36,.35)}
+.hw-fab:hover{background:var(--rose)}
+.hw-banner{display:flex;align-items:center;gap:12px;margin:0 20px 16px;padding:12px 14px;background:#fff;border:2px solid #2AABEE;border-radius:18px;text-decoration:none;color:var(--ink)}
+.hw-bt{flex:1;min-width:0;display:flex;flex-direction:column;line-height:1.3}
+.hw-bt b{font-size:15px;font-weight:800;text-transform:uppercase;letter-spacing:.02em}
+.hw-bt span{font-size:13px;color:var(--muted)}
+.hw-go{flex:0 0 auto;font-weight:800;font-size:14px;color:#1A8BC9}
+@media (max-width:420px){.hw-go{display:none}.hw-fab .hw-lbl{font-size:13px}}
+@media (prefers-reduced-motion:reduce){.hw-dot{animation:hwpulse 2.4s infinite}}
+footer{padding-bottom:96px!important}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.bar i,.chev{transition:none}}
 </style>
 </head>
 <body>
 <div class="page">
+<a class="hw-fab" href="https://t.me/+ZLtZzv8uLcI1OTUy" target="_blank" rel="noopener"><span class="hw-dot"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.9 4.3 18.7 19.4c-.2 1-.9 1.3-1.7.8l-4.8-3.5-2.3 2.2c-.3.3-.5.5-1 .5l.3-4.9 8.9-8c.4-.3-.1-.5-.6-.2L6.5 13.2 1.8 11.7c-1-.3-1-1 .2-1.5L20.6 3c.9-.3 1.6.2 1.3 1.3z"/></svg></span><span class="hw-lbl">Чат для домашніх завдань</span></a>
 
 <header class="wrap hero stack">
   <div class="brand"><span>Наталка Виноградська · кінологиня</span><span class="pill">Навчальна платформа</span></div>
@@ -276,6 +292,7 @@ a.bn:hover{border-color:var(--rose)}
 </header>
 
 
+<a class="hw-banner" href="https://t.me/+ZLtZzv8uLcI1OTUy" target="_blank" rel="noopener"><span class="hw-dot"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.9 4.3 18.7 19.4c-.2 1-.9 1.3-1.7.8l-4.8-3.5-2.3 2.2c-.3.3-.5.5-1 .5l.3-4.9 8.9-8c.4-.3-.1-.5-.6-.2L6.5 13.2 1.8 11.7c-1-.3-1-1 .2-1.5L20.6 3c.9-.3 1.6.2 1.3 1.3z"/></svg></span><span class="hw-bt"><b>Чат для домашніх завдань</b><span>Надсилайте відео й&nbsp;питання по&nbsp;завданнях у&nbsp;Telegram</span></span><span class="hw-go">Перейти →</span></a>
 <section class="wrap bonuses" aria-labelledby="bon-h">
   <h3 id="bon-h" class="bon-h">🎁 Бонуси до&nbsp;програми</h3>
   <div class="bn-grid">
