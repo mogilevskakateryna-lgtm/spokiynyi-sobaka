@@ -301,7 +301,7 @@ a.bn:hover{border-color:var(--rose)}
     <div class="countdown" id="countdown" aria-live="off"></div>
     <p>Підключайтеся за&nbsp;кілька хвилин до&nbsp;початку.<span id="next-note"> Заповніть анкету заздалегідь, щоб&nbsp;Наталка встигла розібрати вашу собаку.</span></p>
     <div class="btn-row">
-      <a class="btn btn-pink" data-zoom href="#">Підключитися в&nbsp;Zoom</a>
+      <a class="btn btn-pink" id="next-zoom" href="#" target="_blank" rel="noopener">Підключитися в&nbsp;Zoom</a>
       <a class="btn btn-ghost" id="next-form" href="#" target="_blank" rel="noopener">Заповнити анкету</a>
     </div>
   </div>
@@ -334,7 +334,7 @@ a.bn:hover{border-color:var(--rose)}
     <h3>Вступ розберемо на&nbsp;онлайн-зустрічі <span style="color:var(--rose)">16.11 о&nbsp;18:00</span></h3>
     <p style="font-size:15px;color:#4A403A">Чому собака не&nbsp;слухається, де&nbsp;знайти час на&nbsp;тренування і&nbsp;як&nbsp;пройти курс з&nbsp;максимальною користю. Після зустрічі тут з'явиться запис.</p>
     <div class="video"><span class="play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span><span class="cap"><span>Запис вступної зустрічі</span><span>з'явиться після 16.11</span></span></div>
-    <a class="btn btn-rose" data-zoom href="#">Підключитися в&nbsp;Zoom · 16.11 о&nbsp;18:00</a>
+    <a class="btn btn-rose" data-zoom="intro" href="#" target="_blank" rel="noopener">Підключитися в&nbsp;Zoom · 16.11 о&nbsp;18:00</a>
   </div>
 </section>
 
@@ -390,7 +390,9 @@ a.bn:hover{border-color:var(--rose)}
 <script>
 (function(){
   /* ───────── НАЛАШТУВАННЯ ───────── */
-  var ZOOM = 'https://us02web.zoom.us/j/88411728068?pwd=l4JUBqKTgbLpyakFsPZCT1CdAc8UD7.1';
+  var ZOOM_INTRO = 'https://us06web.zoom.us/j/84936940474?pwd=OvbKtbaXV9M0xFWzf0JVs4oQvaqMyW.1'; /* вступ 16.11 */
+  var ZOOM = 'https://us06web.zoom.us/j/83988804619?pwd=HFQ77QHJd8CRrssENblIgb72DcLoka.1'; /* вівторки з 24.11 */
+  function zoomOf(m){return m.intro?ZOOM_INTRO:ZOOM;}
   var CAL_TITLE = 'Онлайн урок з Наталкою на курсі "Спокійний собака на вулиці і вдома"';
   var DURATION_MIN = 60;
   var TG_TECH = 'https://t.me/kateryna_mogilevska';
@@ -435,7 +437,7 @@ a.bn:hover{border-color:var(--rose)}
     chev:'<svg class="chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>',
     lock:'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>'};
   document.querySelectorAll('[data-lock]').forEach(function(e){e.innerHTML=I.lock});
-  document.querySelectorAll('[data-zoom]').forEach(function(a){a.href=ZOOM});
+  document.querySelectorAll('[data-zoom]').forEach(function(a){a.href=a.dataset.zoom==='intro'?ZOOM_INTRO:ZOOM});
   document.querySelectorAll('a[href="#rozklad"]').forEach(function(a){a.addEventListener('click',function(){document.getElementById('sched').open=true;});});
 
   function pad(n){return String(n).padStart(2,'0')}
@@ -507,7 +509,7 @@ a.bn:hover{border-color:var(--rose)}
     var d=new Date(m.date+'T12:00:00+02:00'), past=nextIdx===-1||i<nextIdx, isNext=i===nextIdx;
     var acts = past
       ? (m.rec?'<a class="mini mini-soft" href="'+esc(m.rec)+'" target="_blank" rel="noopener">▶ Запис</a>':'<span class="mini mini-soft" style="opacity:.7">запис скоро</span>')
-      : '<a class="mini mini-rose" href="'+ZOOM+'" target="_blank" rel="noopener">Zoom</a>'+
+      : '<a class="mini mini-rose" href="'+zoomOf(m)+'" target="_blank" rel="noopener">Zoom</a>'+
         (m.intro?'':(m.form?'<a class="mini mini-soft" href="'+esc(m.form)+'" target="_blank" rel="noopener">Анкета</a>':'<button class="mini mini-soft" data-form="'+i+'">Анкета</button>'));
     var li=document.createElement('li');
     li.className='row'+(isNext?' is-next':'')+(past?' is-past':'');
@@ -523,6 +525,7 @@ a.bn:hover{border-color:var(--rose)}
     var nm=MEETINGS[nextIdx], nd=new Date(nm.date+'T12:00:00+02:00');
     document.getElementById('next-date').textContent=DAYS[nd.getUTCDay()]+', '+nd.getUTCDate()+' '+MONTHS[nd.getUTCMonth()];
     document.getElementById('next-time').textContent=nm.time;
+    document.getElementById('next-zoom').href=zoomOf(nm);
     document.getElementById('next-topic').textContent=label(nextIdx)+'. '+nm.title;
     if(nm.intro){document.getElementById('next-form').style.display='none';document.getElementById('next-note').style.display='none';}else{var nf=document.getElementById('next-form');if(nm.form)nf.href=nm.form;else{nf.removeAttribute('target');nf.dataset.form=nextIdx;}}
     var tick=function(){var s=Math.max(0,Math.floor((startOf(nm)-Date.now())/1000));
