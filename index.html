@@ -194,7 +194,7 @@ footer{padding-block:24px 40px;font-size:12px;color:var(--muted);text-align:cent
 .cal{background:#fff;border:1px solid var(--line);border-radius:20px;padding:16px;gap:10px}
 .cal-row{display:flex;flex-wrap:wrap;gap:8px}
 .cal-row .chip{flex:1 1 220px;justify-content:center}
-.zoom-card{background:#fff;border:2px dashed var(--pink);border-radius:22px;padding:18px;gap:10px}
+.zoom-card{background:#fff;border:1px solid var(--line);border-radius:22px;padding:18px;gap:10px}
 .videos{display:flex;flex-direction:column;gap:12px}
 .vlabel{font-size:13px;font-weight:800;color:var(--rose);margin-bottom:6px}
 .ytlink{display:inline-block;margin-top:6px;font-size:13px;font-weight:600;color:var(--muted)}
@@ -347,11 +347,10 @@ footer{padding-bottom:96px!important}
   <h2>Чому вона так робить<br><span style="color:var(--rose)">і&nbsp;чому ви&nbsp;не&nbsp;винні</span></h2>
   <p style="color:#4A403A">Почніть звідси. Розберемо, чому собака поводиться саме так, де&nbsp;знайти час на&nbsp;тренування і&nbsp;як&nbsp;пройти курс, щоб&nbsp;отримати результат.</p>
   <div class="zoom-card stack">
-    <span class="mod-meet k" style="all:unset;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--rose)">Розбираємо наживо</span>
-    <h3>Вступ розберемо на&nbsp;онлайн-зустрічі <span style="color:var(--rose)">16.11 о&nbsp;18:00</span></h3>
-    <p style="font-size:15px;color:#4A403A">Чому собака не&nbsp;слухається, де&nbsp;знайти час на&nbsp;тренування і&nbsp;як&nbsp;пройти курс з&nbsp;максимальною користю. Після зустрічі тут з'явиться запис.</p>
-    <div class="video"><span class="play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span><span class="cap"><span>Запис вступної зустрічі</span><span>з'явиться після 16.11</span></span></div>
-    <a class="btn btn-rose" data-zoom="intro" href="#" target="_blank" rel="noopener">Підключитися в&nbsp;Zoom · 16.11 о&nbsp;18:00</a>
+    <span style="font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--rose)">Запис вступної зустрічі · 16.11</span>
+    <h3>Вступ: з&nbsp;чого почати курс</h3>
+    <p style="font-size:15px;color:#4A403A">Чому собака не&nbsp;слухається, де&nbsp;знайти час на&nbsp;тренування і&nbsp;як&nbsp;пройти курс з&nbsp;максимальною користю. Почніть з&nbsp;цього запису.</p>
+    <div id="intro-video"></div>
   </div>
 </section>
 
@@ -415,7 +414,7 @@ footer{padding-bottom:96px!important}
   var TG_TECH = 'https://t.me/kateryna_mogilevska';
   /* form — посилання на Google Форму заняття, rec — запис */
   var MEETINGS = [
-    {date:'2026-11-16', time:'18:00', intro:true, title:'Вступ: чому собака так робить, де знайти час і як пройти курс', rec:''},
+    {date:'2026-11-16', time:'18:00', intro:true, title:'Вступ: чому собака так робить, де знайти час і як пройти курс', rec:'https://youtu.be/X6R2Yr90et8'},
     {date:'2026-11-24', time:'19:00', title:'Контакт, прогулянка і харчова мотивація', form:'https://docs.google.com/forms/d/e/1FAIpQLSfCcpNhTKhMnfTl7tieX0HUHB2s37qCA57nU0ZjFFqjcLuSgQ/viewform', rec:''},
     {date:'2026-12-01', time:'19:00', title:'Онлайн заняття з Наталкою', form:'https://docs.google.com/forms/d/e/1FAIpQLSfRKAeFS2eKNRtEF9Dnloj-EJ3IO_41730yceRHcUcBUiKM1g/viewform', rec:''},
     {date:'2026-12-08', time:'19:00', title:'Онлайн заняття з Наталкою', form:'https://docs.google.com/forms/d/e/1FAIpQLSdu9Xu3HJLwYeeLkDtnW4SjdDhAJWun9dcK6BDacEdCSsmhdw/viewform', rec:''},
@@ -473,23 +472,36 @@ footer{padding-bottom:96px!important}
   document.querySelectorAll('[data-cal]').forEach(function(a){a.href=CAL_LINK});
   document.querySelectorAll('[data-tg]').forEach(function(a){a.href=TG_TECH});
 
+  /* ── Відео з обкладинкою ── */
+  var inPreview=/claude/.test(location.hostname);
+  function videoBlock(o){
+    var watch='https://youtu.be/'+o.yt;
+    var inner='<svg class="paws" viewBox="0 0 120 100" fill="currentColor" aria-hidden="true">'+PAW(20,60,0)+PAW(55,30,15)+PAW(92,8,30)+'</svg>'+
+      '<span class="c-top"><span class="c-pill hot">'+esc(o.num)+'</span><span class="c-pill">'+esc(o.tag)+'</span></span>'+
+      '<span class="c-title">'+esc(o.ct[0])+'<br><span>'+esc(o.ct[1])+'</span></span>'+
+      '<span class="c-bot"><span class="c-by">Наталка Виноградська<br>«Спокійний собака на вулиці і вдома»</span><span class="c-play">'+I.play+'</span></span>';
+    var style=' style="--cbg:'+o.bg+';--cacc:'+o.acc+'"';
+    var player = inPreview
+      ? '<a class="cover" href="'+watch+'" target="_blank" rel="noopener"'+style+' aria-label="Дивитись: '+esc(o.title)+'">'+inner+'</a>'
+      : '<button class="cover" data-yt="'+o.yt+'"'+style+' aria-label="Відтворити: '+esc(o.title)+'">'+inner+'</button>';
+    return '<div class="video">'+player+'</div><a class="ytlink" href="'+watch+'" target="_blank" rel="noopener">Не відкривається відео? Дивитись на YouTube ↗</a>';
+  }
+  document.getElementById('intro-video').innerHTML=videoBlock({yt:'X6R2Yr90et8',num:'Старт',tag:'Запис зустрічі 16.11',ct:['Чому вона так робить','і чому ви не винні'],bg:'#54452F',acc:'#E8B4B5',title:'Вступна зустріч 16.11'});
+  document.addEventListener('click',function(e){
+    var cv=e.target.closest('button.cover');
+    if(!cv)return;
+    var f=document.createElement('iframe');
+    f.src='https://www.youtube-nocookie.com/embed/'+cv.dataset.yt+'?autoplay=1&rel=0';
+    f.allow='autoplay; accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen';f.allowFullscreen=true;f.title=cv.getAttribute('aria-label');
+    cv.replaceWith(f);
+  });
+
   /* ── Уроки ── */
   var html='';
   LESSONS.forEach(function(l){
     var id='l'+l.n.replace('.','-'), hasPdf=!!l.pdf;
-    var inPreview=/claude/.test(location.hostname);
     var vids='<div class="videos">'+l.videos.map(function(v){
-      var watch='https://youtu.be/'+v.yt;
-      var inner='<svg class="paws" viewBox="0 0 120 100" fill="currentColor" aria-hidden="true">'+PAW(20,60,0)+PAW(55,30,15)+PAW(92,8,30)+'</svg>'+
-        '<span class="c-top"><span class="c-pill hot">Урок '+l.n+'</span><span class="c-pill">'+(l.videos.length>1?esc(v.label):'Модуль 1 · На вулиці')+'</span></span>'+
-        '<span class="c-title">'+esc(l.ct[0])+'<br><span>'+esc(l.ct[1])+'</span></span>'+
-        '<span class="c-bot"><span class="c-by">Наталка Виноградська<br>«Спокійний собака на вулиці і вдома»</span><span class="c-play">'+I.play+'</span></span>';
-      var style=' style="--cbg:'+l.bg+';--cacc:'+l.acc+'"';
-      var player = inPreview
-        ? '<a class="cover" href="'+watch+'" target="_blank" rel="noopener"'+style+' aria-label="Дивитись: '+esc(l.t+' · '+v.label)+'">'+inner+'</a>'
-        : '<button class="cover" data-yt="'+v.yt+'"'+style+' aria-label="Відтворити: '+esc(l.t+' · '+v.label)+'">'+inner+'</button>';
-      return '<div>'+(l.videos.length>1?'<div class="vlabel">'+esc(v.label)+'</div>':'')+'<div class="video">'+player+'</div>'+
-        '<a class="ytlink" href="'+watch+'">Не відкривається відео? Дивитись на YouTube ↗</a></div>';}).join('')+'</div>';
+      return '<div>'+(l.videos.length>1?'<div class="vlabel">'+esc(v.label)+'</div>':'')+videoBlock({yt:v.yt,num:'Урок '+l.n,tag:(l.videos.length>1?v.label:'Модуль 1 · На вулиці'),ct:l.ct,bg:l.bg,acc:l.acc,title:l.t+' · '+v.label})+'</div>';}).join('')+'</div>';
     var meta='▶ '+(l.videos.length>1?l.videos.length+' відео':'Відео')+(hasPdf?' · Конспект PDF':'');
     html+='<article class="lesson" id="'+id+'">'+
       '<button class="lesson-head" aria-expanded="false" aria-controls="'+id+'-b">'+
@@ -505,11 +517,6 @@ footer{padding-bottom:96px!important}
   box.addEventListener('click',function(e){
     var h=e.target.closest('.lesson-head');
     if(h){var a=h.parentNode;a.classList.toggle('open');h.setAttribute('aria-expanded',a.classList.contains('open'));return;}
-    var cv=e.target.closest('button.cover');
-    if(cv){var ttl=cv.getAttribute('aria-label');var f=document.createElement('iframe');
-      f.src='https://www.youtube-nocookie.com/embed/'+cv.dataset.yt+'?autoplay=1&rel=0';
-      f.allow='autoplay; accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen';f.allowFullscreen=true;f.title=ttl;
-      cv.replaceWith(f);return;}
     var t=e.target.closest('.tab');
     if(t){var body=t.closest('.lesson-body');
       body.querySelectorAll('.tab').forEach(function(x){x.setAttribute('aria-selected',x===t)});
